@@ -17,7 +17,7 @@ The implementation makes use of several object-oriented design patterns, includi
 
 ```text
 COS214-Practical-4-FilmProduction/
-|-- include/        Header files
+|-- *.h             Header files
 |-- docs/           UML diagrams and design documentation
 |-- *.cpp           C++ implementation files
 |-- main.cpp        Testing and demonstration program
