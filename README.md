@@ -17,7 +17,7 @@ The implementation makes use of several object-oriented design patterns, includi
 
 ```text
 COS214-Practical-4-FilmProduction/
-|-- include/        Header files
+|-- *.h             Header files
 |-- docs/           UML diagrams and design documentation
 |-- *.cpp           C++ implementation files
 |-- main.cpp        Testing and demonstration program
@@ -151,5 +151,5 @@ The `docs/` directory contains the UML diagrams and other design documentation f
 ## Team Members
 
 - Mueez Gani - u24983439
-- Nisiha Osman - u25110188
+- Nisiha Osman - u258511018
 - Kiara Ajodhaparsadh - u25395344
