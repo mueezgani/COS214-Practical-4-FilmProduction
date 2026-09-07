@@ -147,4 +147,4 @@ The `docs/` directory contains the UML diagrams and other design documentation f
 
 - Mueez Gani - u24983439
 - Nisiha Osman
-- 
+- Kiara Ajodhaparsadh - u25395344
