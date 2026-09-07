@@ -1,16 +1,16 @@
 #include <iostream>
  
-#include "include/FilmProduction.h"
-#include "include/ProductionPhase.h"
-#include "include/Scene.h"
-#include "include/ProductionTask.h"
-#include "include/WorkGroup.h"
+#include "FilmProduction.h"
+#include "ProductionPhase.h"
+#include "Scene.h"
+#include "ProductionTask.h"
+#include "WorkGroup.h"
  
-#include "include/WorkIterator.h"
+#include "WorkIterator.h"
  
-#include "include/EquipmentCheck.h"
-#include "include/SafetyCheck.h"
-#include "include/Insurance.h"
+#include "EquipmentCheck.h"
+#include "SafetyCheck.h"
+#include "Insurance.h"
  
  
 struct ProductionWorld
@@ -108,9 +108,26 @@ void runMorningCallScenario(ProductionWorld& world)
     std::cout << "\nFilming the opening scene:" << std::endl;
     world.filmOpeningScene->start();
     world.filmOpeningScene->block();
+    world.filmOpeningScene->block();      // invalid: already blocked
+    world.filmOpeningScene->start();      // invalid: can't start while blocked
+    world.filmOpeningScene->process();    // status check while blocked
     world.filmOpeningScene->complete();   // invalid: still blocked
     world.filmOpeningScene->resume();
     world.filmOpeningScene->complete();
+
+    std::cout << "\nDouble-checking the wrap on the opening scene:" << std::endl;
+    world.filmOpeningScene->start();      // invalid: already completed
+    world.filmOpeningScene->block();      // invalid: already completed
+    world.filmOpeningScene->resume();     // invalid: already completed
+    world.filmOpeningScene->cancel();     // invalid: already completed
+    world.filmOpeningScene->complete();   // invalid: already completed
+
+    std::cout << "\nSecond unit tries a pickup shot, then scraps it:" << std::endl;
+    ProductionTask* pickupShots = new ProductionTask("Pickup Shots - Harbor", Priority::LOW);
+    world.harborOpening->add(pickupShots);
+    pickupShots->start();
+    pickupShots->block();
+    pickupShots->cancel();                // cancel while blocked - rained out for the day
  
     std::cout << "\nTrying to wrap lighting:" << std::endl;
     world.setUpLighting->complete();      // invalid: not started
@@ -150,7 +167,8 @@ void runMiddayDisruptionScenario(ProductionWorld& world)
     world.warehouseClimax->remove(world.carStunt);
     world.carStunt = new Insurance(world.carStunt);
     world.warehouseClimax->add(world.carStunt);
-    world.warehouseClimax->process();
+    world.carStunt->process();            // direct sign-off check
+    world.warehouseClimax->process();     // confirmed again during the scene run
  
     std::cout << "\nRe-checking priority order" << std::endl;
     WorkIterator* triage = world.film->createPriorityIterator();
@@ -171,4 +189,3 @@ int main()
  
     return 0;
 }
- 
