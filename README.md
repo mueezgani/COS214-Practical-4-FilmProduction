@@ -17,13 +17,14 @@ The implementation makes use of several object-oriented design patterns, includi
 
 ```text
 COS214-Practical-4-FilmProduction/
-├── include/        Header files
-├── src/            Source files
-├── docs/           UML diagrams and design documentation
-├── main.cpp        Testing and demonstration program
-├── Makefile        Build configuration
-├── Dockerfile      Docker development environment
-└── README.md       Project documentation
+|-- include/        Header files
+|-- docs/           UML diagrams and design documentation
+|-- *.cpp           C++ implementation files
+|-- main.cpp        Testing and demonstration program
+|-- Makefile        Build configuration
+|-- Dockerfile      Docker development environment
+|-- .gitignore      Ignored build files
+`-- README.md       Project documentation
 ```
 
 ## Requirements
@@ -97,6 +98,7 @@ Using Docker:
 docker run --rm taskforge valgrind --leak-check=full --show-leak-kinds=all ./taskforge
 ```
 
+```markdown
 ## GDB
 
 To debug the program locally:
@@ -108,11 +110,14 @@ gdb ./taskforge
 Example GDB commands:
 
 ```text
-break main
+break ProductionTask::start
 run
+print name
+print priority
+print state
 next
+print state
 continue
-quit
 ```
 
 To run GDB through Docker:
