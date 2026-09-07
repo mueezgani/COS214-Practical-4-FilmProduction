@@ -1,8 +1,8 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall -Wextra
+CXXFLAGS = -std=c++11 -Wall -Wextra -g
 TARGET = taskforge
 
-SRCS = $(wildcard *.cpp)
+SRCS = main.cpp $(wildcard src/*.cpp)
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(TARGET)
