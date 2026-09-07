@@ -1,19 +1,27 @@
-CXX = g++
-CXXFLAGS = -std=c++11 -Wall -Wextra -g -Iinclude
-TARGET = taskforge
+CXX := g++
+CXXFLAGS := -std=c++11 -Wall -Wextra -g
 
-SRCS = $(wildcard *.cpp)
-OBJS = $(SRCS:.cpp=.o)
+TARGET := taskforge
+
+SRC_DIR := src
+BUILD_DIR := build
+
+SOURCES := main.cpp $(wildcard $(SRC_DIR)/*.cpp)
+OBJECTS := $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(SOURCES))
+
+.PHONY: all run clean
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(TARGET)
 
-%.o: %.cpp
+$(BUILD_DIR)/%.o: %.cpp
+	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-clean:
-	rm -f $(OBJS) $(TARGET)
+run: all
+	./$(TARGET)
 
-.PHONY: all clean
+clean:
+	rm -rf $(BUILD_DIR) $(TARGET)
